@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Description from "../Description/Description"
+import Description from "../Description/Description";
 import Feedback from "../Feedback/Feedback";
 import Options from "../Options/Options";
 import Notification from "../Notification/Notification";
 
-export default function  App() {
+export default function App() {
   const [typesFeedback, setTypesFeedback] = useState(() => {
     const savedFeedbacks = localStorage.getItem("feedbacks");
     if (savedFeedbacks !== null) {
@@ -38,19 +38,19 @@ export default function  App() {
 
   const { good, neutral, bad } = typesFeedback;
   const totalFeedback = good + neutral + bad;
-  
+
   return (
     <>
       <Description />
-      <Options 
+      <Options
         onButton={updateFeedback}
         total={totalFeedback}
-        reset={resetFeedback} 
+        reset={resetFeedback}
       />
-            {totalFeedback === 0 ? (
+      {totalFeedback === 0 ? (
         <Notification />
       ) : (
-        <Feedback feedback={typesFeedback} total={totalFeedback} />
+        <Feedback feedback={typesFeedback} total={totalFeedback} positivePercentage={Math.round((good / totalFeedback) * 100)} />
       )}
     </>
   );
